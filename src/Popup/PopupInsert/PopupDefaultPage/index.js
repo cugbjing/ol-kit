@@ -12,6 +12,34 @@ import DataList from '../PopupDataList'
 import PopupTabs from '../PopupTabs'
 import { Header, Body, Close, Title, FeatureNavigator, FeatureCount, HeaderDetails, Frame } from '../PopupHeader/styled'
 
+import {
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+} from 'recharts';
+import Paper from '@material-ui/core/Paper';
+
+const data = [
+  {
+      name: 'Jan', confirmed: 100, US: 2400,
+  },
+  {
+      name: 'Feb', confirmed: 200, US: 1398,
+  },
+  {
+      name: 'Mar', confirmed: 300, US: 9800,
+  },
+  {
+      name: 'Apr', confirmed: 400, US: 3908,
+  },
+  {
+      name: 'May', confirmed: 700, US: 4800,
+  },
+  {
+      name: 'Jun', confirmed: 600, US: 3800,
+  },
+  {
+      name: 'Jul', confirmed: 400, US: 4300,
+  },
+];
 /**
  * @component
  * @category Popup
@@ -81,6 +109,26 @@ class PopupDefaultPage extends Component {
                   }
                   <DataList attributes={attributes} />
                 </div>
+                <div title={'Historical Data'}>
+                    <Paper>
+                    <LineChart
+                        width={280}
+                        height={200}
+                        data={data}
+                        margin={{
+                            top: 10, right: 30, left: 5,bottom:5,
+                        }}
+                    >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Line type="monotone" dataKey="confirmed" stroke="#8884d8" activeDot={{ r: 8 }} />
+                        <Line type="monotone" dataKey="US" stroke="#82ca9d" />
+                    </LineChart>
+                    </Paper>
+                </div>
                 {childrenCount > 3
                   ? <Frame title={translations['_ol_kit.PopupDefaultPage.actions']} height={169}>
                     {children}
@@ -124,7 +172,7 @@ PopupDefaultPage.propTypes = {
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.shape({
     '_ol_kit.PopupDefaultPage.details': PropTypes.string,
-    '_ol_kit.PopupDefaultPage.actions': PropTypes.string,
+    '_ol_kit.PopupDefaultPage.actions': PropTypes.string, 
     '_ol_kit.PopupDefaultPage.customize': PropTypes.string
   }).isRequired,
   /** Shows the customize details button in popup details */
