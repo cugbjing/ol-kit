@@ -17,36 +17,13 @@ import {
 } from 'recharts';
 import Paper from '@material-ui/core/Paper';
 
-const data = [
-  {
-      name: 'Jan', confirmed: 100, US: 2400,
-  },
-  {
-      name: 'Feb', confirmed: 200, US: 1398,
-  },
-  {
-      name: 'Mar', confirmed: 300, US: 9800,
-  },
-  {
-      name: 'Apr', confirmed: 400, US: 3908,
-  },
-  {
-      name: 'May', confirmed: 700, US: 4800,
-  },
-  {
-      name: 'Jun', confirmed: 600, US: 3800,
-  },
-  {
-      name: 'Jul', confirmed: 400, US: 4300,
-  },
-];
 /**
  * @component
  * @category Popup
  * @example ./example.md
  */
 class PopupDefaultPage extends Component {
-  render () {
+  render() {
     const {
       translations,
       title,
@@ -101,7 +78,7 @@ class PopupDefaultPage extends Component {
             <Body>
               <PopupTabs selectedIdx={currentTab}>
                 <div title={translations['_ol_kit.PopupDefaultPage.details']} style={{ height: '170px', overflowY: 'scroll' }}>
-                  { showCustomizeDetails &&
+                  {showCustomizeDetails &&
                     <AttributeSettings onClick={this.props.onSettingsClick}>
                       <i className='zmdi zmdi-settings'></i>
                       <p style={{ fontSize: 'smaller', padding: '0px 5px', margin: 0 }}>{translations['_ol_kit.PopupDefaultPage.customize']}</p>
@@ -109,26 +86,29 @@ class PopupDefaultPage extends Component {
                   }
                   <DataList attributes={attributes} />
                 </div>
-                <div title={'Historical Data'}>
+                {
+                  attributes.historyData ? <div title={'Historical Data'}>
                     <Paper>
-                    <LineChart
+                      <LineChart
                         width={280}
                         height={200}
-                        data={data}
+                        data={attributes.historyData}
                         margin={{
-                            top: 10, right: 30, left: 5,bottom:5,
+                          top: 10, right: 30, left: 5, bottom: 5,
                         }}
-                    >
+                      >
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
+                        <XAxis dataKey="date" />
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Line type="monotone" dataKey="confirmed" stroke="#8884d8" activeDot={{ r: 8 }} />
-                        <Line type="monotone" dataKey="US" stroke="#82ca9d" />
-                    </LineChart>
+                        <Line type="monotone" dataKey="positive" stroke="#8884d8" activeDot={{ r: 8 }} />
+                        <Line type="monotone" dataKey="hospitalized" stroke="#82ca9d" />
+                      </LineChart>
                     </Paper>
-                </div>
+                  </div> : null
+                }
+
                 {childrenCount > 3
                   ? <Frame title={translations['_ol_kit.PopupDefaultPage.actions']} height={169}>
                     {children}
@@ -172,7 +152,7 @@ PopupDefaultPage.propTypes = {
   /** Object with key/value pairs for translated strings */
   translations: PropTypes.shape({
     '_ol_kit.PopupDefaultPage.details': PropTypes.string,
-    '_ol_kit.PopupDefaultPage.actions': PropTypes.string, 
+    '_ol_kit.PopupDefaultPage.actions': PropTypes.string,
     '_ol_kit.PopupDefaultPage.customize': PropTypes.string
   }).isRequired,
   /** Shows the customize details button in popup details */
@@ -180,7 +160,7 @@ PopupDefaultPage.propTypes = {
 }
 
 PopupDefaultPage.defaultProps = {
-  onClose: () => {},
+  onClose: () => { },
   children: [],
   loading: false,
   currentTab: 0,
