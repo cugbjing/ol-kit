@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-
 import { connectToMap } from 'Map'
 import CLOSE from 'images/close_icon.svg'
 import LEFT_ARROW from 'images/left_arrow.svg'
@@ -86,8 +85,7 @@ class PopupDefaultPage extends Component {
                   }
                   <DataList attributes={attributes} />
                 </div>
-                {
-                  attributes.historyData ? <div title={'Historical Data'}>
+                <div title={'Historical Data'}>
                     <Paper>
                       <LineChart
                         width={280}
@@ -106,8 +104,7 @@ class PopupDefaultPage extends Component {
                         <Line type="monotone" dataKey="hospitalized" stroke="#82ca9d" />
                       </LineChart>
                     </Paper>
-                  </div> : null
-                }
+                  </div>
 
                 {childrenCount > 3
                   ? <Frame title={translations['_ol_kit.PopupDefaultPage.actions']} height={169}>
